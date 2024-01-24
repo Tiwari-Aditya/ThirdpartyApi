@@ -5,7 +5,7 @@ import lombok.Data;
 
 @AllArgsConstructor
 @Data
-public class BadRequestException extends RuntimeException{
+public class BadRequestException extends RuntimeException {
     private final String status;
     private final String message;
 }

@@ -1,30 +1,36 @@
 package com.aditya.TodoApp.service;
 
 import com.aditya.TodoApp.entity.Todo;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class WebClientService {
-
 
     private final WebClient webClient;
 
+    @Value("${jsonplaceholder.api.url}")
+    private String apiUrl;
 
-    public Flux<Todo> getAllTodos() {
-        return webClient.get().uri("/todos").retrieve().bodyToFlux(Todo.class);
+    public List<Todo> getAllTodos() {
+        return webClient.get().uri(apiUrl).retrieve().bodyToFlux(Todo.class).collectList().block();
     }
 
-    public Mono<Todo> getTodoById(int id) {
-        return webClient.get().uri("/todos/{id}", id).retrieve().bodyToMono(Todo.class);
+    public Todo getTodoById(Long todoId) {
+        return webClient.get().uri(apiUrl + "/{id}", todoId).retrieve().bodyToMono(Todo.class).block();
     }
 
-    public Flux<Todo> getTodosByCompleted(boolean completed) {
-        return webClient.get().uri("/todos?completed={completed}", completed).retrieve().bodyToFlux(Todo.class);
+    public List<Todo> getTodosByUserId(Long userId) {
+        return webClient.get().uri(apiUrl + "?userId={userId}", userId).retrieve().bodyToFlux(Todo.class).collectList().block();
+    }
+
+    public List getTodoByUserIdAndId(Long userId, Long id) {
+        return webClient.get().uri(apiUrl + "/?userId={userId}&id={id}", userId, id).retrieve().bodyToMono(List.class).block();
     }
 }
 

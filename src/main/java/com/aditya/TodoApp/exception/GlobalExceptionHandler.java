@@ -1,7 +1,6 @@
 package com.aditya.TodoApp.exception;
 
 import com.aditya.TodoApp.customresponse.ApiResponse;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -9,14 +8,14 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<ApiResponse> handleNotFoundException(NotFoundException ex){
+    public ResponseEntity<ApiResponse> handleNotFoundException(NotFoundException ex) {
         ApiResponse apiResponse = new ApiResponse("Error", ex.getMessage(), null);
         return ResponseEntity.status(404).body(apiResponse);
     }
+
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiResponse> handleGenricException(Exception ex){
-        ApiResponse apiResponse = new ApiResponse("Error", ex.getMessage(),null);
+    public ResponseEntity<ApiResponse> handleGenricException(Exception ex) {
+        ApiResponse apiResponse = new ApiResponse("Error", ex.getMessage(), null);
         return ResponseEntity.status(500).body(apiResponse);
-//            return new ResponseEntity<>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

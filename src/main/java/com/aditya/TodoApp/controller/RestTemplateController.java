@@ -10,24 +10,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/rest-template/api")
 @RequiredArgsConstructor
 public class RestTemplateController {
 
     private final RestTemplateService restTemplateService;
 
-    //    @GetMapping("/data")
-//    public ResponseEntity<ApiResponse> getDataFromThirdPartyApi() {
-//        ApiResponse apiResponse = new ApiResponse("Sucess" ,"Data Found",restTemplateService.fetchDataFromapi());
-////        return restTemplateService.fetchDataFromapi();
-//        return ResponseEntity.ok(apiResponse);
-//    }
-
-    @GetMapping
-    public ResponseEntity<ApiResponse> getAllData(){
+    @GetMapping("/all")
+    public ResponseEntity<ApiResponse> getAllData() {
         ApiResponse apiResponse = new ApiResponse("Sucess", "Data Found", restTemplateService.getAll());
         return ResponseEntity.ok(apiResponse);
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse> getDataByid(@PathVariable Long id) {
         ApiResponse apiResponse = new ApiResponse("Sucess", "Data Found", restTemplateService.getTodoById(id));
@@ -46,9 +40,9 @@ public class RestTemplateController {
         return ResponseEntity.ok(apiResponse);
     }
 
-    @GetMapping("/user/{userId}/todo/{id}")
+    @GetMapping("/user/{userId}/id/{id}")
     public ResponseEntity<ApiResponse> getTodoByUserIdAndId(@PathVariable Long userId, @PathVariable Long id) {
-        ApiResponse apiResponse = new ApiResponse("Sucess", "Data Found", restTemplateService.getUserByUserIdAndId(userId,id));
+        ApiResponse apiResponse = new ApiResponse("Sucess", "Data Found", restTemplateService.getUserByUserIdAndId(userId, id));
         return ResponseEntity.ok(apiResponse);
     }
 }

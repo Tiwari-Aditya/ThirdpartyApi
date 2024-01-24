@@ -15,10 +15,12 @@ public class RestTemplateService {
     private final RestTemplate restTemplate;
     @Value("${jsonplaceholder.api.url}")
     private String apiUrl;
-    public List<Todo> getAll(){
+
+    public List<Todo> getAll() {
         String todoUrl = apiUrl;
         return restTemplate.getForObject(todoUrl, List.class);
     }
+
     public List<Todo> getToddByUserId(Long userId) {
         String todoUrl = apiUrl + "?userId={userId}";
         return restTemplate.getForObject(todoUrl, List.class, userId);
@@ -28,9 +30,10 @@ public class RestTemplateService {
         String todoUrl = apiUrl + "/{id}";
         return restTemplate.getForObject(todoUrl, Todo.class, todoId);
     }
-    public List<Todo> getUserByUserIdAndId(Long userId,Long id) {
+
+    public List<Todo> getUserByUserIdAndId(Long userId, Long id) {
         String todoUrl = apiUrl + "?userid={userId}&id={id}";
-        return restTemplate.getForObject(todoUrl, List.class, userId,id);
+        return restTemplate.getForObject(todoUrl, List.class, userId, id);
     }
 
     public List<Todo> getTodoByStatus(boolean completed) {
